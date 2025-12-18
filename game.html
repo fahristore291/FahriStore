@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<div class="container">
+
+  <div class="game-header">
+    <img id="gameLogo">
+    <h2 id="gameName"></h2>
+  </div>
+
+  <label>ID Player</label>
+  <input type="text" placeholder="Masukkan ID">
+
+  <label>Pilih Nominal</label>
+  <select id="nominal"></select>
+
+  <button onclick="orderWA()">Order via WhatsApp</button>
+
+</div>
+
+<script>
+const games = {
+  ml: {
+    name: "Mobile Legends",
+    logo: "assets/games/ml.png",
+    nominal: ["86 Diamonds", "172 Diamonds", "257 Diamonds"]
+  },
+  ff: {
+    name: "Free Fire",
+    logo: "assets/games/ff.png",
+    nominal: ["70 Diamonds", "140 Diamonds", "355 Diamonds"]
+  },
+  pubg: {
+    name: "PUBG Mobile",
+    logo: "assets/games/pubg.png",
+    nominal: ["60 UC", "325 UC", "660 UC"]
+  },
+  mcgg: {
+    name: "Magic Chess GOGO",
+    logo: "assets/games/mcgg.png",
+    nominal: ["Weekly Pass", "Monthly Pass", "Joki Rank"]
+  }
+    genshin impact {
+    name: "Genshin Impact",
+    logo: "assets/games/genshin.png",
+};
+
+const params = new URLSearchParams(window.location.search);
+const gameKey = params.get("game");
+
+if (games[gameKey]) {
+  document.getElementById("gameName").innerText = games[gameKey].name;
+  document.getElementById("gameLogo").src = games[gameKey].logo;
+
+  const select = document.getElementById("nominal");
+  games[gameKey].nominal.forEach(n => {
+    const opt = document.createElement("option");
+    opt.text = n;
+    select.add(opt);
+  });
+}
+
+function orderWA() {
+  const id = document.querySelector("input").value;
+  const nominal = document.getElementById("nominal").value;
+  const text = `Order ${games[gameKey].name}%0AID: ${id}%0ANominal: ${nominal}`;
+  window.open(`https://wa.me/6285199225049?text=${text}`);
+}
+</script>
+
+</body>
+</html>
